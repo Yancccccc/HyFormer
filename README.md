@@ -1,6 +1,8 @@
 # HyFormer
 HyFormer: Hybrid Transformer and CNN for Pixel-Level Multispectral Image Land Cover Classification
 
+![backbone](https://user-images.githubusercontent.com/91734518/219042080-24555609-547e-4311-b183-ff728d34128b.png)
+
 
 Cite
 
