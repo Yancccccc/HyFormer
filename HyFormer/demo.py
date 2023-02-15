@@ -19,13 +19,14 @@ from random_select_point import creat_dataset
 from vit_CNN import ViT_CNN
 from vit_only_CA import ViT_CA
 from vit_CA_CNN import ViT_CA_CNN
+from CNN_vit_2_res import cnn_vit_2_res
 from vit_MLP import ViT_MLP
 from MLP_CNN import mlpcnn
 parser = argparse.ArgumentParser("HSI")
 parser.add_argument('--dataset', choices=['changxing','2022','2020','2018'], default='changxing', help='dataset to use')
 parser.add_argument('--flag_test', choices=['test', 'train'], default='test', help='testing mark')
-parser.add_argument('--mode', choices=['ViT', 'CAF','ViT_CNN','ViT_MLP','MLPCNN'],
-                    default='ViT_CNN', help='mode choice')
+parser.add_argument('--mode', choices=['ViT', 'CAF','ViT_CNN','ViT_MLP','MLPCNN','cnn_vit_2_res'],
+                    default='cnn_vit_2_res', help='mode choice')
 parser.add_argument('--gpu_id', default='0', help='gpu id')
 parser.add_argument('--seed', type=int, default=0, help='number of seed')
 parser.add_argument('--batch_size', type=int, default=32, help='number of batch size')
@@ -478,6 +479,23 @@ elif args.mode == 'ViT_MLP':
         mode='ViT',
         channels=args.num_band,
     )
+  
+elif args.mode == 'cnn_vit_2_res':
+    model = cnn_vit_2_res(
+        image_size=args.patches,
+        near_band=args.band_patches,
+        num_patches=band,
+        num_classes=args.num_classes,
+        dim=64,
+        depth=5,
+        heads=4,
+        mlp_dim=8,
+        dropout=0.1,
+        emb_dropout=0.1,
+        mode='ViT',
+        channels=args.num_band
+)
+   
 elif args.mode == 'MLPCNN':
     model = mlpcnn(num_features=args.band_patches * args.num_band)
 model = model.cuda()
